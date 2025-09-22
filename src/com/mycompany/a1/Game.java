@@ -8,6 +8,7 @@ import java.lang.String;
 
 public class Game extends Form{
 	private GameWorld gw;
+	private Form current;
 	
 	public Game() {
 		gw = new GameWorld();
