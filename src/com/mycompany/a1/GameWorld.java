@@ -1,5 +1,6 @@
 package com.mycompany.a1;
 import java.util.ArrayList;
+import com.codename1.charts.models.Point;
 
 public class GameWorld {
 	
@@ -16,7 +17,8 @@ public class GameWorld {
 		Spider spider1 = new Spider();
 		Spider spider2 = new Spider();
 		
-		Flag flag1 = new Flag(1);
+		// TODO fix this. Add locations when creating.
+		Flag flag1 = new Flag(1, Point (100, 100));
 		Flag flag2 = new Flag(2);
 		Flag flag3 = new Flag(3);
 		Flag flag4 = new Flag(4);

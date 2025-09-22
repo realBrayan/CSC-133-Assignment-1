@@ -1,27 +1,35 @@
 package com.mycompany.a1;
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.charts.models.Point;
 
 public class Flag extends Fixed {
 	
 	private int sequenceNumber;
 	
-	public Flag(int num) {
+	private static final int FLAG_SIZE = 10;
+	private static final int FLAG_COLOR = ColorUtil.BLUE;
+	
+	public Flag(int sequenceNumber, Point location) {
 		
-		sequenceNumber = num;
+		super(FLAG_SIZE, location, FLAG_COLOR);
 		
-		this.setSize(10);
-		this.setColor(ColorUtil.BLUE);
-		
-		this.setLocation(sequenceNumber * 100, sequenceNumber * 100);
+		this.sequenceNumber = sequenceNumber;
 	}
 
 	public int getSequenceNumber() {
-		return sequenceNumber;
+		return this.sequenceNumber;
 	}
 	
 	@Override
 	public void setColor(int c) {
 		// do nothing.
 		System.out.println("Cannot change the Flag's colors.");
+	}
+	
+	@Override
+	public String toString() {
+		String parentString = super.toString();
+		String myString = " seqNum=" + this.sequenceNumber;
+		return "Flag: " + parentString + myString;
 	}
 }

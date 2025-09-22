@@ -1,41 +1,48 @@
 package com.mycompany.a1;
-
+import com.codename1.charts.models.Point;
 import java.util.Random;
 import com.codename1.charts.util.ColorUtil;
 
 public class FoodStation extends Fixed {
 
 	private int capacity;
-	private boolean empty;
+	private static final Random rand = new Random();
 		
 	public FoodStation() {
-		// TODO Auto-generated constructor stub
 		
-		Random rand = new Random();
+		super(generateRandomSize(), generateRandomLocation(), ColorUtil.GREEN);
 		
-		int randomSize = 10 + rand.nextInt(40);
-		
-		this.setSize(randomSize);
-		capacity = this.getSize() * 10;
-		
-		this.setColor(ColorUtil.GREEN);
-		
+		this.capacity = this.getSize();
 	}
+	
+	private static int generateRandomSize() {
+		return 10 + rand.nextInt(41); 
+	}
+	
+	private static Point generateRandomLocation() {
+		
+		float x = rand.nextFloat() * 1000.0f;
+		float y = rand.nextFloat() * 1000.0f;
+		
+		return new Point(x,y);
+	}
+	
 	
 	public int getCapacity() {
-		return capacity;
+		return this.capacity;
 	}
 	
-	public void setCapacity(int eaten) {
-		capacity -= eaten;
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 	
-	public boolean isEmpty() {
-		return empty;
-	}
-	
-	public void setEmpty() {
-		empty = true;
+	@Override
+	public String toString() {
+		
+		String parentString = super.toString();
+		String myString = " capacity=" + this.capacity;
+		
+		return "FoodStation: " + parentString + myString;
 	}
 	
 }

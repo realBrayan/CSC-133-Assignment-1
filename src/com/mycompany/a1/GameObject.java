@@ -41,7 +41,7 @@ public abstract class GameObject {
 //		setLocation(childLocation);
 //	}
 	
-	public GameObject(int size, Point location, int color) {
+	public GameObject(int size, int color, Point location) {
 		this.size = size;
 		this.location = location;
 		this.color = color;
