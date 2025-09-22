@@ -1,76 +1,85 @@
 package com.mycompany.a1;
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.charts.models.Point;
 
-public class Ant extends Moveable implements iFoodie {
+public class Ant extends Moveable implements IFoodie {
 	
 	private int maximumSpeed; 
 	private int foodConsumptionRate;
 	private int healthLevel;
 	private int lastFlagReached;
-	private int lives;
+	
+	private static final int ANT_COLOR = ColorUtil.rgb(255, 0, 0);
+	private static final int INITIAL_SPEED = 5;
 	
 	
-	public Ant() {
-		// TODO Auto-generated constructor stub
+	public Ant(Point startLocation, int size, int maxSpeed, int consumptionRate) {
 		
-		//    color,           size, speed, heading
-		super(ColorUtil.MAGENTA, 10, 15, 0);
+		super(size, startLocation, ANT_COLOR, 0, INITIAL_SPEED);
 		
-		
-		maximumSpeed = 50;
-		foodConsumptionRate = 2;
-		healthLevel = 10;
-		lastFlagReached = 1;
-		lives = 3;
+		this.maximumSpeed = maxSpeed; // should be set to something like 50
+		this.foodConsumptionRate = consumptionRate; // probably set it to something low, like 2 or 3
+		this.healthLevel = 10;
+		this.lastFlagReached = 1;
 		 
 		 // set the position to the first flag. 
-		 this.setLocation(100, 100);
+		 //this.setLocation(100, 100);
 
 		
 	}
 	
 	public int getMaximumSpeed () {
-		return maximumSpeed;
+		return this.maximumSpeed;
 	}	
 	
 	public int getHealthLevel() {
-		return healthLevel;
+		return this.healthLevel;
 	}
 	
 	public int getLastFlagReached() {
-		return lastFlagReached;
+		return this.lastFlagReached;
 	}
 	
-	public int getLives() {
-		return lives;
+	public int getFoodConsumptionRate() {
+		return this.foodConsumptionRate;
 	}
 	
 	
 	@Override
-	public void setSpeed(int s) {
+	public void setSpeed(int speed) {
 		
-		double healthPercentage = (double) healthLevel / 10.0;
+		double healthPercentage = (double) this.healthLevel / 10.0;
 		
-		double currentMaxSpeed = maximumSpeed * healthPercentage;
+		double currentMaxSpeed = this.maximumSpeed * healthPercentage;
 		
-		if (s <= currentMaxSpeed) {
-			super.setSpeed(s);
-		}
-	}
-	
-	@Override
-	public void setFoodConsumption(int fc) {
-		if (fc >= 0) {
-			foodConsumptionRate = fc;
-		}
-	}
-	
-	public void setHealthLevel(int hl) {
-		if (hl >= 0 && hl <= 10) {
-			healthLevel = hl;
+		if (speed >= 0 && speed <= currentMaxSpeed) {
 			
-			if (this.getSpeed() > maximumSpeed * (healthLevel / 10)) {
-				this.setSpeed(maximumSpeed * (healthLevel / 10));
+			super.setSpeed(speed);
+			
+		} else if (speed > currentMaxSpeed) {
+			super.setSpeed((int)currentMaxSpeed);
+		}
+	}
+	
+	@Override
+	public void setFoodConsumption(int rate) {
+		if (rate >= 0) {
+			this.foodConsumptionRate = rate;
+		}
+	}
+	
+	public void fadeColor() {
+		int currentRed = ColorUtil.red(this.getColor());
+		int newRed = Math.max(0,  currentRed - 15);
+		this.setColor(ColorUtil.rgb(newRed, 0, 0));
+	}
+	
+	public void setHealthLevel(int newHealthLevel) {
+		if (newHealthLevel >= 0 && newHealthLevel <= 10) {
+			healthLevel = newHealthLevel;
+			
+			if (this.getSpeed() > this.maximumSpeed * (this.healthLevel / 10.0)) {
+				setSpeed((int)(this.maximumSpeed * (this.healthLevel / 10.0)));
 			}
 		}
 	}
@@ -79,39 +88,6 @@ public class Ant extends Moveable implements iFoodie {
 		if ( f > 0 && f == lastFlagReached + 1) {
 			lastFlagReached = f;
 		}
-	}
-	
-	public void consumeFood() {
-		
-		int newFoodLevel = this.getFoodLevel() - foodConsumptionRate;
-		
-		this.setFoodLevel(newFoodLevel);
-	}
-	
-	public void gotStung() {
-		
-	}
-	
-	public void collectFood(int amount) {
-		
-		int newFoodLevel = this.getFoodLevel() + amount;
-		this.setFoodLevel(newFoodLevel);
-	}
-	
-	public boolean reachedFlag(int flagNum) {
-		
-		if ( flagNum == lastFlagReached + 1) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isDead() {
-		if (lives == 0) {
-			return true;
-		}
-		
-		return false;
 	}
 	
 }
