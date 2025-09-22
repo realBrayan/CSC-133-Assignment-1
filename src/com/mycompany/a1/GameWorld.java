@@ -202,4 +202,27 @@ public class GameWorld {
         }
         return null;
     }
+    
+    public void changeAntConsumptionRate() {
+        Ant ant = getTheAnt();
+        if (ant != null) {
+            Random rand = new Random();
+            int change = rand.nextInt(5) - 2;
+            if (change == 0) {
+                change = 1; // make sure it's non-zero
+            }
+
+            int currentRate = ant.getFoodConsumptionRate();
+            int newRate = currentRate + change;
+
+            // If the new rate would be zero or negative, set it to the old rate + 1.
+            if (newRate <= 0) {
+                ant.setFoodConsumption(currentRate + 1);
+            } else {
+                ant.setFoodConsumption(newRate);
+            }
+            System.out.println("Ant's food consumption rate has been changed.");
+        }
+    }
+    
 }

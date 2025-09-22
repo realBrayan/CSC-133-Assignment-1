@@ -4,11 +4,10 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
-import java.lang.String;
 
 public class Game extends Form{
 	private GameWorld gw;
-	private Form current;
+	private boolean isExitConfirmed = false;
 	
 	public Game() {
 		gw = new GameWorld();
@@ -37,64 +36,80 @@ public class Game extends Form{
 				
 				String sCommand = myTextField.getText().toString();
 				myTextField.clear();
-				if(sCommand.length() != 0)
-					
-					command = sCommand.charAt(0);
 				
-					switch (command) {
+				if (sCommand.length() == 0) {
+					return;
+				}
+				
+				if (isExitConfirmed) {
+                    if (sCommand.equalsIgnoreCase("y")) {
+                        gw.exitGame();
+                    } else if (sCommand.equalsIgnoreCase("n")) {
+                        isExitConfirmed = false;
+                        System.out.println("Exit cancelled.");
+                    } else {
+                        System.out.println("Invalid confirmation. Please enter 'y' or 'n'.");
+                    }
+                    return; 
+                }
+				
+				char commandChar = sCommand.charAt(0);
+			
+				switch (commandChar) {
 					case 'a':
-						gw.accelerate();
+						gw.accelerateAnt();
 						break; 
 					case 'b':
-						// do b
+						gw.brakeAnt();
 						break;
-					case 'i':
-						// do i
+					case 'l':
+						gw.turnAntLeft();
 						break;
 					case 'r': 
-						// do r
+						gw.turnAntRight();
 						break;
 					case 'c':
-						// do c
+						gw.changeAntConsumptionRate();
 						break;
-					case '1':
-		            case '2':
-		            case '3':
-		            case '4':
-		            case '5':
-		            case '6':
-		            case '7':
-		            case '8':
-		            case '9': 
-		            	// do nums
-		            	break;
 		            case 'f':
-		            	//do f
-		            	break;
+		            	gw.pretendFoodCollision();		            	break;
 		            case 'g':
-		            	// do g
+		            	gw.pretendSpiderCollision();
 		            	break;
 		            case 't':
-		            	// do t
+		            	gw.tickClock();
 		            	break;
 		            case 'd':
-		            	// do d
+		            	gw.displayGameState();
 		            	break;
 		            case 'm':
-		            	// do m
+		            	gw.outputMap();
 		            	break;
 		            case 'x':
-		            	// do m
+		            	isExitConfirmed = true;
+		            	System.out.println("Are you sure you want to exit? (y/n)");
 		            	break;
-		            case 'y':
-		            	// do m
-		            	break;
-		            case 'n':
-		            	// do m
-		            	break;
-					} // switch
+		            default:
+		            	// check if the command is a digit 1-9
+		            	if (Character.isDigit(commandChar)) {
+		            		
+		            		String numStr = String.valueOf(commandChar);
+		            		int flagNum = Integer.parseInt(numStr);
+		            		
+                            if (flagNum >= 1 && flagNum <= 9) {
+                                gw.pretendFlagCollision(flagNum);
+                            } else {
+                                System.out.println("Error: Invalid command.");
+                            }
+                        } else {
+                            System.out.println("Error: Invalid command.");
+                        }
+                        break;
+
 			}// actionPerformed
 		}	// new ActionLestener()
-		);	// addActionListener
 	} 		// play
+	);	// addActionListener
 }
+}
+
