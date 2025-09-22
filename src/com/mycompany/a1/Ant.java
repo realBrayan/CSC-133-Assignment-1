@@ -90,4 +90,14 @@ public class Ant extends Moveable implements IFoodie {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		String parentString = super.toString();
+		String myString = " maxSpeed=" + maximumSpeed +
+						  " foodConsumptionRate=" + foodConsumptionRate + 
+						  " healthLevel=" + healthLevel +
+						  " lastFlagReached=" + lastFlagReached;
+		return "Ant: " + parentString + myString;
+	}
+	
 }
