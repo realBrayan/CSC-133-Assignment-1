@@ -1,15 +1,11 @@
 package com.mycompany.a1;
+import com.codename1.charts.models.Point;
 
-public class Fixed extends GameObject {
+public abstract class Fixed extends GameObject {
 	
-	private int sequenceNumber;
 	
-	public Fixed() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public int getSequenceNumber() {
-		return sequenceNumber;
+	public Fixed(int color, int size, Point location) {
+		super(color, size, location);
 	}
 	
 	@Override
