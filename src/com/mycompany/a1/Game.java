@@ -105,11 +105,9 @@ public class Game extends Form{
                             System.out.println("Error: Invalid command.");
                         }
                         break;
-
-			}// actionPerformed
-		}	// new ActionLestener()
-	} 		// play
-	);	// addActionListener
-}
+				} // Switch
+			} // actionPerformed
+		});	// addActionListener
+	} // play
 }
 
